@@ -93,7 +93,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'CLIENT': {
-            "host":"mongodb+srv://admin2:bEwqZpnwdkxmfwkb@cluster0.glcvi5o.mongodb.net/?retryWrites=true&w=majority", "name":"usiu_chatbotDB",
+            "host":config("MONGO_DB_URI"), "name":"usiu_chatbotDB",
             "authMechanism":"SCRAM-SHA-1" #For atlas cloud db connection
         },
     }

@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Courses',
             fields=[
-                ('crsId', models.IntegerField(max_length=7, primary_key=True, serialize=False)),
+                ('crsId', models.CharField(max_length=7, primary_key=True, serialize=False)),
                 ('crsName', models.CharField(max_length=25)),
                 ('meets', models.CharField(max_length=50)),
             ],
