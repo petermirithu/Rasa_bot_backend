@@ -66,20 +66,20 @@ def courseApi(request, id=0):
         courses_serializer=CoursesSerializer(data=course_data)
         if courses_serializer.is_valid():
             courses_serializer.save()
-            return JsonResponse("Course Data Added Successfully!",safe=False)
-        return JsonResponse("Failed to Add Course Data :(",safe=False)
+            return JsonResponse("Course Record Added Successfully!",safe=False)
+        return JsonResponse("Failed to Add Course Record :(",safe=False)
     elif request.method=='PUT':
         course_data=JSONParser().parse(request)
         course=Courses.objects.get(crsId=course_data['crsId'])
         courses_serializer=CoursesSerializer(course,data=course_data)
         if courses_serializer.is_valid():
             courses_serializer.save()
-            return JsonResponse("Successfully Updated Course Data",safe=False)
-        return JsonResponse("Failed to Update Course Data :(",safe=False)
+            return JsonResponse("Successfully Updated Course Record",safe=False)
+        return JsonResponse("Failed to Update Course Record :(",safe=False)
     elif request.method=='DELETE':
         course=Courses.objects.get(crsId=id)
         course.delete()
-        return JsonResponse("Deleted Course data Successfully",safe=False)
+        return JsonResponse("Deleted Course Record Successfully",safe=False)
 
 @csrf_exempt
 def facultyApi(request, id=0):
@@ -101,20 +101,20 @@ def facultyApi(request, id=0):
         faculty_serializer=FacultySerializer(data=faculty_data)
         if faculty_serializer.is_valid():
             faculty_serializer.save()
-            return JsonResponse("Faculty Data Added Successfully!",safe=False)
-        return JsonResponse("Failed to Add Faculty Data :(",safe=False)
+            return JsonResponse("Faculty Record Added Successfully!",safe=False)
+        return JsonResponse("Failed to Add Faculty Record :(",safe=False)
     elif request.method=='PUT':
         faculty_data=JSONParser().parse(request)
         faculty=Faculty.objects.get(ftyId=faculty_data['ftyId'])
         faculty_serializer=FacultySerializer(faculty,data=faculty_data)
         if faculty_serializer.is_valid():
             faculty_serializer.save()
-            return JsonResponse("Successfully Updated Faculty Data",safe=False)
+            return JsonResponse("Successfully Updated Faculty Record",safe=False)
         return JsonResponse("Failed to Update Faculty Data :(",safe=False)
     elif request.method=='DELETE':
         faculty=Faculty.objects.get(ftyId=id)
         faculty.delete()
-        return JsonResponse("Successfully Deleted Faculty Data",safe=False)
+        return JsonResponse("Successfully Deleted Faculty Record",safe=False)
 
 #cant get
 @csrf_exempt
