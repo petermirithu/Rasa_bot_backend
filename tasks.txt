@@ -1,0 +1,4 @@
+foreign key for crsid on assignments
+authentication for logging in
+fix errors from the chat
+add comments

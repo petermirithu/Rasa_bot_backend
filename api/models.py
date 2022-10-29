@@ -22,6 +22,6 @@ class Assignments(models.Model):
     asgmtId=models.CharField(primary_key=True, max_length=9)
     crsId=models.CharField(max_length=7)
     asgmtName=models.CharField(max_length=25)
-    dateGiven=models.DateField
-    dateDue=models.DateField
-    attempts=models.IntegerField
+    dateGiven=models.CharField(max_length=10)
+    dateDue=models.CharField(max_length=10)
+    attempts=models.CharField(max_length=1)
