@@ -13,10 +13,6 @@ from rest_framework.decorators import api_view
 
 # Create your views here.
 
-# For the POST method, use the body and the form to input data and POST it. Type in all the table's fields in the key section and the all the data for the table in the value section. No special characters such as quotation marks needed
-# For the GET method, there are two ways to fetch data, fetch a single record, or fetch all the records available in the database. To fetch a single record, in the url in postman, add /student/stdid and click body and select none and click send while in the GET method and this will fetch the specific record you want. To fetch all the records available in the database, simply add /student while in the GET method and click body and select none and click send, this will fetch all the records available in the database
-# For the PUT method, make sure you are in PUT method in postman. Navigate to body then raw then type, in JSON format, the table's fields together with their data and in the section you wanna update the data, type in your new updated data. Make sure that the record exists and that you match the id of the existing record. After you are done typing that, click send, a message "Updated Student Record Successfully" will show up
-# For the DELETE method, make sure you are in the DELETE method then click body then select none. To delete a record, in the url, add /student/stdId then click send. A message "Deleted Student Record Successfully" will show and the record would have been successfully deleted in the database.
 # @csrf_exempt
 # def studentApi(request, id=0):
 #     if request.method=='GET':
@@ -108,13 +104,6 @@ def deleteStudent(request, id):
         return JsonResponse("Deleted Student Record Successfully",safe=False)
     except Students.DoesNotExist:
         return JsonResponse("The Specified Student Record Does Not Exist.", safe=False)
-
-
-# To GET, make sure there is data in the database then in the url, add /course and then select the GET method and make sure in the body, select none then click send
-# To POST, click the POST method, click body then form then add all the required table fields in the key section and the data you wanna add in the value section. Once you are done and everything is correct in terms of data types, click send, a message "Course Record Added Successfully!" will display
-# To PUT, click the PUT method, click body then raw and then enter, in JSON format, the table fields together with the data and make sure that the id you enter matches the id in the existing table you want to update data in. A message "Successfully Updated Course Record" will display
-# Work on the delete method
-# To DELETE, make sure you are in the DELETE method then click body then select none. To delete a record, in the url, add /course/crsId then click send. A message "Deleted Course Record Successfully" will show and the record would have been successfully deleted in the database.
 
 # @csrf_exempt
 # def courseApi(request, id=0):
