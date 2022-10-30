@@ -20,7 +20,7 @@ class Faculty(models.Model):
 
 class Assignments(models.Model):
     asgmtId=models.CharField(primary_key=True, max_length=9)
-    crsId=models.CharField(max_length=7)
+    crsId = models.ForeignKey(Courses, on_delete=models.CASCADE)
     asgmtName=models.CharField(max_length=25)
     dateGiven=models.CharField(max_length=10)
     dateDue=models.CharField(max_length=10)
