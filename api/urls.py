@@ -29,5 +29,5 @@ urlpatterns=[
     path('getAllAssignments', views.getAllAssignments),
     path('createAssignment', views.createAssignment),
     path('updateAssignment', views.updateAssignment),
-    path('deleteAssignment/<str:id>', views.deleteAssignment),
+    path('deleteAssignment/<str:id>', views.deleteAssignment), 
 ]

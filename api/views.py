@@ -344,9 +344,9 @@ def createAssignment(request):
         "dateGiven":request.POST.get("dateGiven"),
         "dateDue":request.POST.get("dateDue"),
         "attempts":request.POST.get("attempts")
-    }
-    assignments_serializer=AssignmentsSerializer(data=assignment_data)
-    if assignments_serializer.is_valid():
+    }    
+    assignments_serializer=AssignmentsSerializer(data=assignment_data)    
+    if assignments_serializer.is_valid():        
         assignments_serializer.save()
         return JsonResponse("Assignments Data Added Successfully!",safe=False)
     return JsonResponse("Failed to Add Assignments Data :(",safe=False)
@@ -356,7 +356,7 @@ def createAssignment(request):
 def updateAssignment(request):
     assignment_data=JSONParser().parse(request)
     assignment=Assignments.objects.get(asgmtId=assignment_data['asgmtId'])
-    assignments_serializer=AssignmentsSerializer(assignment,data=assignment_data)
+    assignments_serializer=AssignmentsSerializer(assignment,data=assignment_data)    
     if assignments_serializer.is_valid():
         assignments_serializer.save()
         return JsonResponse("Updated Assignments Successfully",safe=False)
