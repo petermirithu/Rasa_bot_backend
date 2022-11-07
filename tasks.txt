@@ -1,0 +1,3 @@
+foreign key for crsid on assignments
+authentication for logging in
+add comments
