@@ -31,21 +31,26 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
-    'backendApp',
+INSTALLED_APPS = [    
+    'rest_framework',
+    'rest_framework.authtoken',
+    'corsheaders',
+    'api',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rest_framework',
-    'corsheaders',
-    'api',
-
+    'django.contrib.staticfiles',    
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+JWT_SECRET = config("JWT_SECRET")
+
+JWT_ALGORITHM = config("JWT_ALGORITHM")
+
+ENCODE_ALGORITHM = config("ENCODE_ALGORITHM")
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',

@@ -8,6 +8,11 @@ class Students(models.Model):
     stdFName=models.CharField(max_length=15)
     stdLName=models.CharField(max_length=15)
     stdEmail=models.EmailField(max_length=254)
+    stdPassword=models.CharField(max_length=500, default="b'$2b$09$ndx1B.Fk0JeIuuu5HFYqHeeoKVd.31I44VBTsuOk4KmpSz.PFXZT.'")
+    stdToken=models.CharField(max_length=500, default="")
+    '''
+    Password to type is: Qwerty254
+    '''
 
 # Courses Table
 class Courses(models.Model):

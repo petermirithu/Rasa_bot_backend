@@ -19,8 +19,10 @@ from django.urls import path
 from django.conf.urls import include
 from django.urls import re_path
 
+from . import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('', include("backednApp.urls")),
+    path("", views.home),
     re_path(r'^',include('api.urls'))
 ]
