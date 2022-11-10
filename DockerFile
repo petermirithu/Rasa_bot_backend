@@ -1,11 +1,18 @@
 From python:3.9-buster
 
-RUN pip install --no-compile  -r ./requirements.txt
+RUN mkdir /buzz_bot
+
+COPY ./requirements.txt ./buzz_bot/requirements.txt
+RUN pip install --no-compile  -r /buzz_bot/requirements.txt
 
 ENV PYTHONWARNINGS ignore
 ENV PYTHONDONTWRITEBYTECODE=true
 ENV PYTHONUNBUFFERED 1
 ENV PATH="${PATH}:/root/.local/bin"
 ENV PYTHONPATH=.
+
+COPY . /buzz_bot/
+
+WORKDIR /buzz_bot
 
 CMD ["start_prod.sh"]
