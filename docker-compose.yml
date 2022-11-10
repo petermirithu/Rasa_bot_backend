@@ -1,6 +1,6 @@
 name: rasa-bot-backend
 services:    
-  bot:
+  rasa-bot-backend:
     image: okteto.dev/rasa_bot_backend:latest
     build: .
     replicas: 1

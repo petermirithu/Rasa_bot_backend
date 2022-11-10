@@ -29,7 +29,7 @@ deploy:
 # The dev section defines how to activate a development container
 # More info: https://www.okteto.com/docs/reference/manifest/#dev
 dev:
-  bot:
+  rasa-bot-backend:
     image: okteto.dev/rasa_bot_backend:latest
     command: bash
     workdir: /buzz_bot
