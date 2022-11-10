@@ -32,9 +32,9 @@ dev:
   bot:
     image: okteto.dev/rasa_bot_backend:latest
     command: bash
-    workdir: /bot
+    workdir: .
     sync:
-      - .:/bot
+      - .:.
     forward:
       - 8000:8000
     reverse:
