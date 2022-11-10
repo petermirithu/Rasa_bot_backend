@@ -11,7 +11,7 @@ build:
   #  - OKTETO_BUILD_BOT_TAG: image tag
   bot:
     context: .
-    dockerfile: Dockerfile
+    dockerfile: DockerFile
     image: okteto.dev/rasa_bot_backend:latest
 
 # The deploy section defines how to deploy your development environment
