@@ -1,0 +1,23 @@
+name: simple-rbas
+services:    
+  bot:
+    public: true
+      image:okteto.dev/Rasa_bot_backend:latest
+    build: .
+    replicas: 1
+    command: bash -c "gunicorn bot.wsgi --reload -b 0.0.0.0:8000"
+    ports:
+      - 8000
+    resources:
+      cpu: 100m
+      memory: 128Mi
+    env_file:
+        - .env
+    environment:
+        - SECRET_KEY='django-insecure-gqlaeu49$rx4dn3tdg#1xx&1o0g_6r33n1bp%2*y$xc0elspue'
+        - DEBUG=True
+        - MODE=dev
+        - MONGO_DB_URI='mongodb+srv://admin2:bEwqZpnwdkxmfwkb@cluster0.glcvi5o.mongodb.net/?retryWrites=true&w=majority' 
+        - JWT_SECRET='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+        - JWT_ALGORITHM='HS256'
+        - ENCODE_ALGORITHM='utf-8'
