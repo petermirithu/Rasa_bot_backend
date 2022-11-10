@@ -19,12 +19,17 @@ class Courses(models.Model):
     crsId=models.CharField(primary_key=True, max_length=7)
     crsName=models.CharField(max_length=50)
     meets=models.CharField(max_length=50)
+    about=models.CharField(max_length=500, default="")
+    location=models.CharField(max_length=500, default="")
 
 # Faculty Table
 class Faculty(models.Model):
     ftyId=models.CharField(primary_key=True, max_length=6)
     ftyFName=models.CharField(max_length=15)
     ftyLName=models.CharField(max_length=15)
+    ftyEmail=models.CharField(max_length=50, default="")
+    ftyPhone=models.CharField(max_length=50, default="")
+    ftyOffice=models.CharField(max_length=200, default="")
 
 # Assignments Table
 class Assignments(models.Model):

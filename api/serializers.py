@@ -4,19 +4,19 @@ from api.models import Students, Courses, Faculty, Assignments
 class StudentsSerializer(serializers.ModelSerializer):
     class Meta:
         model=Students
-        fields=('stdId', 'stdFName', 'stdLName', 'stdEmail', 'stdToken')
+        exclude=("stdPassword",)
 
 class CoursesSerializer(serializers.ModelSerializer):
     class Meta:
         model=Courses
-        fields=('crsId', 'crsName', 'meets')
+        fields="__all__"
 
 class FacultySerializer(serializers.ModelSerializer):
     class Meta:
         model=Faculty
-        fields=('ftyId', 'ftyFName', 'ftyLName')
+        fields="__all__"
 
 class AssignmentsSerializer(serializers.ModelSerializer):
     class Meta:
         model=Assignments
-        fields=('asgmtId', 'crsId', 'asgmtName', 'dateGiven', 'dateDue', 'attempts')
+        fields="__all__"
