@@ -9,7 +9,7 @@ build:
   #  - OKTETO_BUILD_BOT_REPOSITORY: image repo
   #  - OKTETO_BUILD_BOT_IMAGE: image name
   #  - OKTETO_BUILD_BOT_TAG: image tag
-  bot:
+  rasa-bot-backend:
     context: .
     dockerfile: DockerFile
     image: okteto.dev/rasa_bot_backend:latest
