@@ -4,7 +4,7 @@ from api.models import Students, Courses, Faculty, Assignments
 class StudentsSerializer(serializers.ModelSerializer):
     class Meta:
         model=Students
-        fields=('stdId', 'stdFName', 'stdLName', 'stdEmail')
+        fields=('stdId', 'stdFName', 'stdLName', 'stdEmail', 'stdToken')
 
 class CoursesSerializer(serializers.ModelSerializer):
     class Meta:

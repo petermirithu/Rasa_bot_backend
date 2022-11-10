@@ -1,1 +1,3 @@
-python manage.py runserver 8080
+#!/bin/sh
+echo "Starting development Server"
+python manage.py runserver
