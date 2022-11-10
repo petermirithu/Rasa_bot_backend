@@ -129,7 +129,9 @@ def createCourse(request):
     course_data={
         "crsId":request.POST.get("crsId"),
         "crsName":request.POST.get("crsName"),
-        "meets":request.POST.get("meets")
+        "meets":request.POST.get("meets"),
+        "about":request.POST.get("about"),
+        "location":request.POST.get("location")
     }
     courses_serializer=CoursesSerializer(data=course_data)
     if courses_serializer.is_valid():
@@ -181,7 +183,10 @@ def createFaculty(request):
     faculty_data={
         "ftyId":request.POST.get("ftyId"),
         "ftyFName":request.POST.get("ftyFName"),
-        "ftyLName":request.POST.get("ftyLName")
+        "ftyLName":request.POST.get("ftyLName"),
+        "ftyEmail":request.POST.get("ftyEmail"),
+        "ftyPhone":request.POST.get("ftyPhone"),
+        "ftyOffice":request.POST.get("ftyOffice")
     }
     faculty_serializer=FacultySerializer(data=faculty_data)
     if faculty_serializer.is_valid():
