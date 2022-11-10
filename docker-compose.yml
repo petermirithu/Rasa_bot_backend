@@ -4,7 +4,7 @@ services:
     image: okteto.dev/rasa_bot_backend:latest
     build: .
     replicas: 1
-    command: bash -c "gunicorn bot.wsgi --reload -b 0.0.0.0:8000"
+    command: bash -c "gunicorn core.wsgi --reload -b 0.0.0.0:8000"
     ports:
       - 8000
     resources:
