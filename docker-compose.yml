@@ -1,8 +1,7 @@
-name: simple-rbas
+name: rasa-bot-backend
 services:    
   bot:
-    public: true
-      image:okteto.dev/Rasa_bot_backend:latest
+    image: okteto.dev/rasa_bot_backend:latest
     build: .
     replicas: 1
     command: bash -c "gunicorn bot.wsgi --reload -b 0.0.0.0:8000"

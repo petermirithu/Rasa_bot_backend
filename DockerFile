@@ -1,7 +1,7 @@
 From python:3.9-buster
 
 RUN mkdir /bot
-RUN pip install - U pip
+# RUN pip install - U pip
 
 COPY ./requirements.txt ./bot/requirements.txt
 RUN pip install --no-compile  -r /bot/requirements.txt
