@@ -9,9 +9,9 @@ from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
 from api.enc_decryption import check_password, encode_value
 
-from api.models import Students, Courses, Faculty, Assignments
+from api.models import Students, Courses, Faculty, Assignments, StudentsCourses, FacultyCourses
 from api.permissions import isAuthorized
-from api.serializers import StudentsSerializer, CoursesSerializer, FacultySerializer, AssignmentsSerializer
+from api.serializers import StudentsSerializer, CoursesSerializer, FacultySerializer, AssignmentsSerializer, StudentsCoursesSerializer, FacultyCoursesSerializer
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
@@ -27,29 +27,28 @@ statusExists = status.HTTP_423_LOCKED
 
 # Create your views here.
 @api_view(['POST'])
-def login_user(request):    
+def login_user(request):
     try:
         email = request.POST.get("email")
-        password = request.POST.get("password")                
+        password = request.POST.get("password")
         if(email and password):
             try:
-                profile = Students.objects.get(stdEmail=email)                                
+                profile = Students.objects.get(stdEmail=email)
                 if(check_password(password, profile.stdPassword) == True):
                     now = datetime.now()
-                    payload = {'email': email,'loggedinAt': now.strftime("%m/%d/%Y, %H:%M:%S")}                    
-                    profile.stdToken=encode_value(payload) 
+                    payload = {'email': email,'loggedinAt': now.strftime("%m/%d/%Y, %H:%M:%S")}
+                    profile.stdToken=encode_value(payload)
                     serialised_profile = StudentsSerializer(profile, many=False)
                     return Response(serialised_profile.data, status=statusOk)
                 else:
                     return Response('Password is incorrect', status=statusBadRequest)
-            except Students.DoesNotExist:                
+            except Students.DoesNotExist:
                 return Response('User is not found', status=statusNotFound)
         else:
             return Response("Make sure you provide an email and password", status=statusBadRequest)
-    except:        
+    except:
         print(traceback.format_exc())
         return Response("An error occured while authenticating you", status=statusBadRequest)
-
 
 @api_view(['GET'])
 @permission_classes([isAuthorized])
@@ -108,6 +107,60 @@ def deleteStudent(request, id):
 
 @api_view(['GET'])
 @permission_classes([isAuthorized])
+def getOneStudentCourse(request, id):
+    try:
+        studentcourse = StudentsCourses.objects.get(sdcsId=id)
+        studentscourses_serializer = StudentsCoursesSerializer(studentcourse, many=False)
+        return JsonResponse(studentscourses_serializer.data, safe=False)
+    except StudentsCourses.DoesNotExist:
+        return JsonResponse("The Specific Students Courses Record Does Not Exist.", safe=False)
+
+
+@api_view(['GET'])
+@permission_classes([isAuthorized])
+def getAllStudentsCourses(request):
+    studentscourses = StudentsCourses.objects.all()
+    studentscourses_serializer = StudentsCoursesSerializer(studentscourses, many=True)
+    return JsonResponse(studentscourses_serializer.data, safe=False)
+
+@api_view(['POST'])
+@permission_classes([isAuthorized])
+def createStudentCourse(request):
+    studentcourse_data = {
+        "stdId": request.POST.get("stdId"),
+        "crsId": request.POST.get("crsId"),
+        "sdcsId": request.POST.get("sdcsId"),
+    }
+    studentscourses_serializer=StudentsCoursesSerializer(data=studentcourse_data)
+    if studentscourses_serializer.is_valid():
+        studentscourses_serializer.save()
+        return JsonResponse("Student Course Record Added Successfully!",safe=False)
+    return JsonResponse("Failed to Add Student Course Record :(",safe=False)
+
+
+@api_view(['PUT'])
+@permission_classes([isAuthorized])
+def updateStudentCourse(request):
+    studentcourse_data=JSONParser().parse(request)
+    studentcourse=StudentsCourses.objects.get(sdcsId=studentcourse_data['sdcsId'])
+    studentscourses_serializer=StudentsCoursesSerializer(studentcourse,data=studentcourse_data)
+    if studentscourses_serializer.is_valid():
+        studentscourses_serializer.save()
+        return JsonResponse("Updated Student Course Record Successfully",safe=False)
+    return JsonResponse("Failed to Update Student Course Data:(",safe=False)
+
+@api_view(['DELETE'])
+@permission_classes([isAuthorized])
+def deleteStudentCourse(request, id):
+    try:
+        studentcourse=StudentsCourses.objects.get(sdcsId=id)
+        studentcourse.delete()
+        return JsonResponse("Deleted Student Course Record Successfully",safe=False)
+    except StudentsCourses.DoesNotExist:
+        return JsonResponse("The Specified Student Course Record Does Not Exist.", safe=False)
+
+@api_view(['GET'])
+@permission_classes([isAuthorized])
 def getOneCourse(request, id):
     try:
         course=Courses.objects.get(crsId=id)
@@ -157,6 +210,58 @@ def deleteCourse(request, id):
         return JsonResponse("Deleted Course Record Successfully",safe=False)
     except Courses.DoesNotExist:
         return JsonResponse("The Specific Course Record Does Not Exist.", safe=False)
+
+@api_view(['GET'])
+@permission_classes([isAuthorized])
+def getOneFacultyCourse(request, id):
+    try:
+        facultycourse=FacultyCourses.objects.get(crsId=id)
+        facultycourses_serializer=FacultyCoursesSerializer(facultycourse,many=False)
+        return JsonResponse(facultycourses_serializer.data,safe=False)
+    except FacultyCourses.DoesNotExist:
+        return JsonResponse("The Specific Faculty Course Record Does Not Exist.", safe=False)
+
+@api_view(['GET'])
+@permission_classes([isAuthorized])
+def getAllFacultyCourses(request):
+    facultycourses = FacultyCourses.objects.all()
+    facultycourses_serializer=FacultyCoursesSerializer(facultycourses,many=True)
+    return JsonResponse(facultycourses_serializer.data,safe=False)
+
+@api_view(['POST'])
+@permission_classes([isAuthorized])
+def createFacultyCourse(request):
+    facultycourse_data={
+        "ftyId":request.POST.get("ftyId"),
+        "crsId":request.POST.get("crsId"),
+        "fycsId":request.POST.get("fycsId")
+    }
+    facultycourses_serializer=FacultyCoursesSerializer(data=facultycourse_data)
+    if facultycourses_serializer.is_valid():
+        facultycourses_serializer.save()
+        return JsonResponse("Faculty Course Record Added Successfully!",safe=False)
+    return JsonResponse("Failed to Add Faculty Course Record :(",safe=False)
+
+@api_view(['PUT'])
+@permission_classes([isAuthorized])
+def updateFacultyCourse(request):
+    facultycourse_data=JSONParser().parse(request)
+    facultycourse=FacultyCourses.objects.get(fycsId=facultycourse_data['fycsId'])
+    facultycourses_serializer=FacultyCoursesSerializer(facultycourse,data=facultycourse_data)
+    if facultycourses_serializer.is_valid():
+        facultycourses_serializer.save()
+        return JsonResponse("Successfully Updated Faculty Course Record",safe=False)
+    return JsonResponse("Failed to Update Faculty Course Record :(",safe=False)
+
+@api_view(['DELETE'])
+@permission_classes([isAuthorized])
+def deleteFacultyCourse(request, id):
+    try:
+        facultycourse=FacultyCourses.objects.get(fycsId=id)
+        facultycourse.delete()
+        return JsonResponse("Deleted Faculty Course Record Successfully",safe=False)
+    except FacultyCourses.DoesNotExist:
+        return JsonResponse("The Specific Faculty Course Record Does Not Exist.", safe=False)
 
 @api_view(['GET'])
 @permission_classes([isAuthorized])
@@ -248,9 +353,9 @@ def createAssignment(request):
         "dateGiven":request.POST.get("dateGiven"),
         "dateDue":request.POST.get("dateDue"),
         "attempts":request.POST.get("attempts")
-    }    
-    assignments_serializer=AssignmentsSerializer(data=assignment_data)    
-    if assignments_serializer.is_valid():        
+    }
+    assignments_serializer=AssignmentsSerializer(data=assignment_data)
+    if assignments_serializer.is_valid():
         assignments_serializer.save()
         return JsonResponse("Assignments Data Added Successfully!",safe=False)
     return JsonResponse("Failed to Add Assignments Data :(",safe=False)
@@ -260,7 +365,7 @@ def createAssignment(request):
 def updateAssignment(request):
     assignment_data=JSONParser().parse(request)
     assignment=Assignments.objects.get(asgmtId=assignment_data['asgmtId'])
-    assignments_serializer=AssignmentsSerializer(assignment,data=assignment_data)    
+    assignments_serializer=AssignmentsSerializer(assignment,data=assignment_data)
     if assignments_serializer.is_valid():
         assignments_serializer.save()
         return JsonResponse("Updated Assignments Successfully",safe=False)

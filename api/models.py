@@ -13,12 +13,21 @@ class Students(models.Model):
     '''
     Password to type is: Qwerty254
     '''
+class StudentsCourses(models.Model):
+    stdId=models.CharField("Students", related_name='students', on_delete=models.CASCADE)
+    crsId=models.CharField("Courses", related_name='courses', on_delete=models.CASCADE)
+    sdcsId=models.CharField(primary_key=True, max_length=7)
 
 # Courses Table
 class Courses(models.Model):
     crsId=models.CharField(primary_key=True, max_length=7)
     crsName=models.CharField(max_length=50)
     meets=models.CharField(max_length=50)
+
+class FacultyCourses(models.Model):
+    ftyId=models.CharField("Faculty", related_name='faculty', on_delete=models.CASCADE)
+    crsId=models.CharField("Courses", related_name='courses', on_delete=models.CASCADE)
+    fycsId=models.CharField(primary_key=True, max_length=7)
 
 # Faculty Table
 class Faculty(models.Model):
